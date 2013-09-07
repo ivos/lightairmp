@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" xmlns="SCHEMA3" targetNamespace="SCHEMA3">
+	<xsd:element name="TABLE33" type="TABLE33__type" />
+	<xsd:element name="TABLE32" type="TABLE32__type" />
+	<xsd:element name="TABLE31" type="TABLE31__type" />
+	<xsd:complexType name="TABLE33__type">
+		<xsd:attribute name="A6" use="optional" />
+		<xsd:attribute name="ID" use="optional" />
+		<xsd:attribute name="DOUBLE6" use="optional" />
+	</xsd:complexType>
+	<xsd:complexType name="TABLE32__type">
+		<xsd:attribute name="A5" use="optional" />
+		<xsd:attribute name="DATE5" use="optional" />
+		<xsd:attribute name="ID" use="optional" />
+	</xsd:complexType>
+	<xsd:complexType name="TABLE31__type">
+		<xsd:attribute name="A4" use="optional" />
+		<xsd:attribute name="ID" use="optional" />
+		<xsd:attribute name="TIME4" use="optional" />
+		<xsd:attribute name="INT4" use="optional" />
+	</xsd:complexType>
+</xsd:schema>

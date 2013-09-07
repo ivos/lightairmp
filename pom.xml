@@ -107,6 +107,12 @@
 			<version>1.0.13</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>net.sf.seaf</groupId>
+			<artifactId>seaf-test-commons</artifactId>
+			<version>1.4</version>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 	<build>
 		<pluginManagement>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" xmlns="SCHEMA2" targetNamespace="SCHEMA2">
+	<xsd:element name="TABLE21" type="TABLE21__type" />
+	<xsd:complexType name="TABLE21__type">
+		<xsd:attribute name="A3" use="optional" />
+		<xsd:attribute name="ID" use="optional" />
+		<xsd:attribute name="INT3" use="optional" />
+	</xsd:complexType>
+</xsd:schema>

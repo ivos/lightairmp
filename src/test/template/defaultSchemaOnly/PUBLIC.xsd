@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" xmlns="PUBLIC" targetNamespace="PUBLIC">
+	<xsd:element name="TABLE1" type="TABLE1__type" />
+	<xsd:element name="TABLE2" type="TABLE2__type" />
+	<xsd:complexType name="TABLE1__type">
+		<xsd:attribute name="A1" use="optional" />
+		<xsd:attribute name="TIMESTAMP1" use="optional" />
+		<xsd:attribute name="DATE1" use="optional" />
+		<xsd:attribute name="TIME1" use="optional" />
+		<xsd:attribute name="ID" use="optional" />
+		<xsd:attribute name="DOUBLE1" use="optional" />
+		<xsd:attribute name="INT1" use="optional" />
+	</xsd:complexType>
+	<xsd:complexType name="TABLE2__type">
+		<xsd:attribute name="A2" use="optional" />
+		<xsd:attribute name="ID" use="optional" />
+		<xsd:attribute name="INT2" use="optional" />
+		<xsd:attribute name="TABLE1ID" use="optional" />
+	</xsd:complexType>
+</xsd:schema>

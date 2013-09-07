@@ -13,6 +13,7 @@ import net.sf.lightair.exception.CreateDatabaseConnectionException;
 import net.sf.lightair.exception.DatabaseDriverClassNotFoundException;
 import net.sf.lightair.internal.properties.PropertiesProvider;
 import net.sf.lightair.internal.properties.PropertyKeys;
+import net.sf.lightairmp.dbmaintainer.XsdDataSetStructureGenerator;
 
 import org.apache.commons.lang.time.StopWatch;
 import org.apache.maven.plugin.AbstractMojo;
@@ -22,7 +23,6 @@ import org.unitils.core.ConfigurationLoader;
 import org.unitils.core.dbsupport.DbSupportFactory;
 import org.unitils.core.dbsupport.DefaultSQLHandler;
 import org.unitils.core.dbsupport.SQLHandler;
-import org.unitils.dbmaintainer.structure.impl.XsdDataSetStructureGenerator;
 
 /**
  * Generate XSD from database.
@@ -33,9 +33,10 @@ public class GenerateXsdMojo extends AbstractMojo implements PropertyKeys {
 
 	/**
 	 * The directory into which the XSD files will be generated. Defaults to
-	 * {@code src/test/resources}.
+	 * {@code src/test/resources/light-air-xsd}.
 	 * 
-	 * @parameter expression="${project.build.testSourceDirectory}"
+	 * @parameter 
+	 *            expression="${project.build.testSourceDirectory}/light-air-xsd"
 	 * @required
 	 */
 	private File xsdDir;
@@ -44,6 +45,9 @@ public class GenerateXsdMojo extends AbstractMojo implements PropertyKeys {
 		this.xsdDir = xsdDir;
 	}
 
+	/**
+	 * Generate the XSD files.
+	 */
 	public void execute() throws MojoFailureException {
 		PropertiesProvider propertiesProvider = getLightairPropertiesProvider();
 		Properties configuration = getUnitilsConfiguration(propertiesProvider);
@@ -62,6 +66,17 @@ public class GenerateXsdMojo extends AbstractMojo implements PropertyKeys {
 		return propertiesProvider;
 	}
 
+	/**
+	 * Create Unitils configuration.
+	 * <p>
+	 * Load Unitils default values. Add support for H2 database. Finally, set
+	 * our own configuration: database dialect, schema names and output
+	 * directory.
+	 * 
+	 * @param propertiesProvider
+	 * @return
+	 * @throws MojoFailureException
+	 */
 	private Properties getUnitilsConfiguration(
 			PropertiesProvider propertiesProvider) throws MojoFailureException {
 		Properties configuration = new Properties();
@@ -78,6 +93,12 @@ public class GenerateXsdMojo extends AbstractMojo implements PropertyKeys {
 		return configuration;
 	}
 
+	/**
+	 * Convert XSD output directory into canonical file name.
+	 * 
+	 * @return
+	 * @throws MojoFailureException
+	 */
 	private String getXsdDirCanonical() throws MojoFailureException {
 		try {
 			final String canonicalPath = xsdDir.getCanonicalPath();
@@ -92,6 +113,11 @@ public class GenerateXsdMojo extends AbstractMojo implements PropertyKeys {
 		}
 	}
 
+	/**
+	 * Load default Unitils values.
+	 * 
+	 * @param configuration
+	 */
 	private void loadUnitilsDefaultValues(Properties configuration) {
 		new ConfigurationLoader() {
 			@Override
@@ -101,6 +127,12 @@ public class GenerateXsdMojo extends AbstractMojo implements PropertyKeys {
 		}.loadDefaultConfiguration(configuration);
 	}
 
+	/**
+	 * Add custom support for H2 database into Unitils configuration, as Unitils
+	 * does not support it out-of-the-box.
+	 * 
+	 * @param configuration
+	 */
 	private void addSupportForH2Database(Properties configuration) {
 		configuration.put(
 				"org.unitils.core.dbsupport.DbSupport.implClassName.h2",
@@ -112,6 +144,12 @@ public class GenerateXsdMojo extends AbstractMojo implements PropertyKeys {
 		configuration.put("database.storedIndentifierCase.h2", "auto");
 	}
 
+	/**
+	 * Create a datasource to connect to the database.
+	 * 
+	 * @param propertiesProvider
+	 * @return
+	 */
 	private DataSource createDataSource(PropertiesProvider propertiesProvider) {
 		SingleConnectionDataSource dataSource;
 		getLog().info("Creating database connection.");

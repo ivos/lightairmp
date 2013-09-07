@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" xmlns:dflt="PUBLIC">
+	<xsd:import namespace="PUBLIC" schemaLocation="PUBLIC.xsd" />
+	<xsd:import namespace="SCHEMA1" schemaLocation="SCHEMA1.xsd" />
+	<xsd:import namespace="SCHEMA2" schemaLocation="SCHEMA2.xsd" />
+	<xsd:import namespace="SCHEMA3" schemaLocation="SCHEMA3.xsd" />
+	<xsd:element name="dataset">
+		<xsd:complexType>
+			<xsd:choice minOccurs="0" maxOccurs="unbounded">
+				<xsd:element name="TABLE1" type="dflt:TABLE1__type" />
+				<xsd:element name="TABLE2" type="dflt:TABLE2__type" />
+				<xsd:any namespace="PUBLIC" />
+				<xsd:any namespace="SCHEMA1" />
+				<xsd:any namespace="SCHEMA2" />
+				<xsd:any namespace="SCHEMA3" />
+			</xsd:choice>
+		</xsd:complexType>
+	</xsd:element>
+</xsd:schema>
