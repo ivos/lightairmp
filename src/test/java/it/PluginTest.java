@@ -12,6 +12,7 @@ import javax.xml.validation.Validator;
 import net.sf.lightairmp.GenerateXsdMojo;
 import net.sf.seaf.test.util.TemplatingTestBase;
 
+import org.apache.maven.plugin.Mojo;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -96,14 +97,20 @@ public class PluginTest extends TemplatingTestBase {
 		}
 	}
 
+	private Mojo createMojo() {
+		final GenerateXsdMojo mojo = new GenerateXsdMojo();
+		mojo.setXsdDir(new File(GENERATED_BASE_DIR));
+		mojo.setLightAirProperties(new File(
+				"src/test/resources/light-air.properties"));
+		return mojo;
+	}
+
 	@Test
 	public void defaultSchemaOnly() throws Exception {
 		try {
 			createDefaultSchema();
 
-			final GenerateXsdMojo mojo = new GenerateXsdMojo();
-			mojo.setXsdDir(new File(GENERATED_BASE_DIR));
-			mojo.execute();
+			createMojo().execute();
 		} finally {
 			dropDefaultSchema();
 		}
@@ -116,9 +123,7 @@ public class PluginTest extends TemplatingTestBase {
 		try {
 			createOtherSchemas();
 
-			final GenerateXsdMojo mojo = new GenerateXsdMojo();
-			mojo.setXsdDir(new File(GENERATED_BASE_DIR));
-			mojo.execute();
+			createMojo().execute();
 		} finally {
 			dropOtherSchemas();
 		}
@@ -132,9 +137,7 @@ public class PluginTest extends TemplatingTestBase {
 			createDefaultSchema();
 			createOtherSchemas();
 
-			final GenerateXsdMojo mojo = new GenerateXsdMojo();
-			mojo.setXsdDir(new File(GENERATED_BASE_DIR));
-			mojo.execute();
+			createMojo().execute();
 		} finally {
 			dropOtherSchemas();
 			dropDefaultSchema();

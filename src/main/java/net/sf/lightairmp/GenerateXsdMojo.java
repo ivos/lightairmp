@@ -33,22 +33,47 @@ public class GenerateXsdMojo extends AbstractMojo implements PropertyKeys {
 
 	/**
 	 * The directory into which the XSD files will be generated. Defaults to
-	 * {@code src/test/resources/light-air-xsd}.
+	 * {@code src/test/resources/light-air.properties}.
 	 * 
-	 * @parameter 
-	 *            expression="${project.build.testSourceDirectory}/light-air-xsd"
+	 * @parameter expression=
+	 *            "${project.basedir}/src/test/resources/light-air.properties"
+	 * @required
+	 */
+	private File lightAirProperties;
+
+	/**
+	 * The directory into which the XSD files will be generated. Defaults to
+	 * {@code src/test/java}.
+	 * 
+	 * @parameter expression= "${project.build.testSourceDirectory}"
 	 * @required
 	 */
 	private File xsdDir;
 
+	// Standard getters and setters for the properties
+
+	public File getXsdDir() {
+		return xsdDir;
+	}
+
 	public void setXsdDir(File xsdDir) {
 		this.xsdDir = xsdDir;
+	}
+
+	public File getLightAirProperties() {
+		return lightAirProperties;
+	}
+
+	public void setLightAirProperties(File lightAirProperties) {
+		this.lightAirProperties = lightAirProperties;
 	}
 
 	/**
 	 * Generate the XSD files.
 	 */
 	public void execute() throws MojoFailureException {
+		getLog().info("Generating DbUnit flat dataset XSD files...");
+
 		PropertiesProvider propertiesProvider = getLightairPropertiesProvider();
 		Properties configuration = getUnitilsConfiguration(propertiesProvider);
 
@@ -58,11 +83,15 @@ public class GenerateXsdMojo extends AbstractMojo implements PropertyKeys {
 		XsdDataSetStructureGenerator generator = new XsdDataSetStructureGenerator();
 		generator.init(configuration, sqlHandler);
 		generator.generateDataSetStructure();
+
+		getLog().info("Finished generating DbUnit flat dataset XSD files.");
 	}
 
-	private PropertiesProvider getLightairPropertiesProvider() {
-		PropertiesProvider propertiesProvider = new PropertiesProvider();
-		propertiesProvider.init();
+	private PropertiesProvider getLightairPropertiesProvider()
+			throws MojoFailureException {
+		FileSystemPropertiesProvider propertiesProvider = new FileSystemPropertiesProvider(
+				lightAirProperties);
+		propertiesProvider.initFromFileSystem();
 		return propertiesProvider;
 	}
 
