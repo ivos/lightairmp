@@ -4,6 +4,7 @@
 	<body>
 		<menu name="Overview">
 			<item name="Introduction" href="index.html" />
+			<item name="How to use" href="usage.html" />
 			<item name="Goals" href="plugin-info.html" />
 		</menu>
 		<menu ref="reports" />
