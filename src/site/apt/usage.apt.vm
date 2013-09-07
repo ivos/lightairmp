@@ -43,19 +43,7 @@ How to use LightAir Maven plugin
  <<<light-air.properties>>> file in <<<src/test/resources>>>.
  
 +---+
-# Database connection
-database.driverClassName=...
-database.connectionUrl=...
-database.userName=...
-database.password=...
-
-# Database dialect
-# Select one of: h2, oracle, oracle9, oracle10, hsqldb, mysql, db2, postgresql, derby, mssql
-database.dialect=...
-
-# Database default schema
-# Set the schema to be used when no schema is specified in a dataset
-database.defaultSchema=PUBLIC
+...
 
 # Names of database schemas from which to generate the XSDs
 # Use a comma-separated list for multiple schemas: SCHEMA1,SCHEMA2,SCHEMA3
@@ -69,7 +57,7 @@ database.schemaNames=PUBLIC
  Run the LightAir Maven plugin to generate the XSD files:
 
 +--------+
-mvn light-air:generate-xsd
+ mvn light-air:generate-xsd
 +--------+
 
  After this the XSD files will get generated in the <<<src/test/java>>> source folder.
