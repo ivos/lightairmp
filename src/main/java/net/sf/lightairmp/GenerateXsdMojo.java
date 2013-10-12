@@ -111,6 +111,7 @@ public class GenerateXsdMojo extends AbstractMojo implements PropertyKeys {
 		Properties configuration = new Properties();
 		loadUnitilsDefaultValues(configuration);
 		addSupportForH2Database(configuration);
+		addSupportForInformix(configuration);
 
 		configuration.put(DbSupportFactory.PROPKEY_DATABASE_DIALECT,
 				propertiesProvider.getProperty(DATABASE_DIALECT));
@@ -171,6 +172,23 @@ public class GenerateXsdMojo extends AbstractMojo implements PropertyKeys {
 				"org.dbunit.ext.h2.H2DataTypeFactory");
 		configuration.put("database.identifierQuoteString.h2", "auto");
 		configuration.put("database.storedIndentifierCase.h2", "auto");
+	}
+
+	/**
+	 * Add custom support for Informix into Unitils configuration, as Unitils
+	 * does not support it out-of-the-box.
+	 * 
+	 * @param configuration
+	 */
+	private void addSupportForInformix(Properties configuration) {
+		configuration.put(
+				"org.unitils.core.dbsupport.DbSupport.implClassName.informix",
+				"org.unitils.core.dbsupport.InformixDbSupport");
+		configuration.put(
+				"org.dbunit.dataset.datatype.IDataTypeFactory.implClassName",
+				"org.dbunit.dataset.datatype.DefaultDataTypeFactory");
+		configuration.put("database.identifierQuoteString.informix", "auto");
+		configuration.put("database.storedIndentifierCase.informix", "auto");
 	}
 
 	/**
