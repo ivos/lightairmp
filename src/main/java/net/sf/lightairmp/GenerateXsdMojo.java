@@ -32,11 +32,11 @@ import org.unitils.core.dbsupport.SQLHandler;
 public class GenerateXsdMojo extends AbstractMojo implements PropertyKeys {
 
 	/**
-	 * The directory into which the XSD files will be generated. Defaults to
-	 * {@code src/test/resources/light-air.properties}.
+	 * Path to Light Air properties file. Defaults to
+	 * {@code target/test-classes/light-air.properties}.
 	 * 
 	 * @parameter expression=
-	 *            "${project.basedir}/src/test/resources/light-air.properties"
+	 *            "${project.build.testOutputDirectory}/light-air.properties"
 	 * @required
 	 */
 	private File lightAirProperties;
