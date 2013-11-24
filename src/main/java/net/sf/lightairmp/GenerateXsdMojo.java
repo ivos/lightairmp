@@ -10,10 +10,10 @@ import java.util.Properties;
 import javax.sql.DataSource;
 
 import net.sf.lightair.exception.CreateDatabaseConnectionException;
-import net.sf.lightair.exception.DatabaseDriverClassNotFoundException;
 import net.sf.lightair.internal.properties.PropertiesProvider;
 import net.sf.lightair.internal.properties.PropertyKeys;
 import net.sf.lightairmp.dbmaintainer.XsdDataSetStructureGenerator;
+import net.sf.lightairmp.exception.DatabaseDriverClassNotFoundException;
 
 import org.apache.commons.lang.time.StopWatch;
 import org.apache.maven.plugin.AbstractMojo;
