@@ -25,12 +25,16 @@ public class PluginTest extends TemplatingTestBase {
 
 	static final String GENERATED_BASE_DIR = "target/generated-xsd/light-air-xsd/";
 
-	static JdbcTemplate db;
+	static JdbcTemplate db, dbHsql;
 
 	static {
 		SingleConnectionDataSource dataSource = new SingleConnectionDataSource(
 				"jdbc:h2:mem:test", "sa", "", true);
 		db = new JdbcTemplate(dataSource);
+
+		SingleConnectionDataSource dataSourceHsql = new SingleConnectionDataSource(
+				"jdbc:hsqldb:mem:test", "sa", "", true);
+		dbHsql = new JdbcTemplate(dataSourceHsql);
 	}
 
 	public PluginTest() {
@@ -73,21 +77,41 @@ public class PluginTest extends TemplatingTestBase {
 		db.execute("drop schema schema3 if exists");
 	}
 
+	private void createHsql() {
+		dbHsql.execute("create table tableHsql (id int primary key, tableHsqlid int, aHsql varchar(255), intHsql int)");
+	}
+
+	private void dropHsql() {
+		dbHsql.execute("drop table tableHsql if exists");
+	}
+
 	private void verify(String test) throws Exception {
 		performTest(test + "/dataset.xsd", "dataset.xsd");
 		performTest(test + "/PUBLIC.xsd", "PUBLIC.xsd");
 		performTest(test + "/SCHEMA1.xsd", "SCHEMA1.xsd");
 		performTest(test + "/SCHEMA2.xsd", "SCHEMA2.xsd");
 		performTest(test + "/SCHEMA3.xsd", "SCHEMA3.xsd");
-		validateXsdConformance(DEFAULT_TEMPLATES_BASE_DIR + test);
+		validateXsdConformance(DEFAULT_TEMPLATES_BASE_DIR + test, "");
 	}
 
-	private void validateXsdConformance(String path) throws Exception {
-		Source xmlFile = new StreamSource(new File(path + "/sample.xml"));
+	private void verifyHsql() throws Exception {
+		performTest("hsql/dataset.xsd", "dataset.xsd");
+		performTest("hsql/PUBLIC.xsd", "PUBLIC.xsd");
+		validateXsdConformance(DEFAULT_TEMPLATES_BASE_DIR + "hsql", "");
+
+		performTest("hsql/dataset-hsql.xsd", "dataset-hsql.xsd");
+		performTest("hsql/PUBLIC-hsql.xsd", "PUBLIC-hsql.xsd");
+		validateXsdConformance(DEFAULT_TEMPLATES_BASE_DIR + "hsql", "-hsql");
+	}
+
+	private void validateXsdConformance(String path, String suffix)
+			throws Exception {
+		Source xmlFile = new StreamSource(new File(path + "/sample" + suffix
+				+ ".xml"));
 		SchemaFactory schemaFactory = SchemaFactory
 				.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-		Schema schema = schemaFactory
-				.newSchema(new File(path + "/dataset.xsd"));
+		Schema schema = schemaFactory.newSchema(new File(path + "/dataset"
+				+ suffix + ".xsd"));
 		Validator validator = schema.newValidator();
 		try {
 			validator.validate(xmlFile);
@@ -97,11 +121,11 @@ public class PluginTest extends TemplatingTestBase {
 		}
 	}
 
-	private Mojo createMojo() {
+	private Mojo createMojo(String propertiesFileName) {
 		final GenerateXsdMojo mojo = new GenerateXsdMojo();
 		mojo.setXsdDir(new File(GENERATED_BASE_DIR));
-		mojo.setLightAirProperties(new File(
-				"src/test/resources/light-air.properties"));
+		mojo.setLightAirProperties(new File("src/test/resources/"
+				+ propertiesFileName));
 		return mojo;
 	}
 
@@ -110,7 +134,7 @@ public class PluginTest extends TemplatingTestBase {
 		try {
 			createDefaultSchema();
 
-			createMojo().execute();
+			createMojo("light-air.properties").execute();
 		} finally {
 			dropDefaultSchema();
 		}
@@ -123,7 +147,7 @@ public class PluginTest extends TemplatingTestBase {
 		try {
 			createOtherSchemas();
 
-			createMojo().execute();
+			createMojo("light-air.properties").execute();
 		} finally {
 			dropOtherSchemas();
 		}
@@ -137,13 +161,28 @@ public class PluginTest extends TemplatingTestBase {
 			createDefaultSchema();
 			createOtherSchemas();
 
-			createMojo().execute();
+			createMojo("light-air.properties").execute();
 		} finally {
 			dropOtherSchemas();
 			dropDefaultSchema();
 		}
 
 		verify("mixed");
+	}
+
+	@Test
+	public void profiles() throws Exception {
+		try {
+			createDefaultSchema();
+			createHsql();
+
+			createMojo("light-air-profiles.properties").execute();
+		} finally {
+			dropHsql();
+			dropDefaultSchema();
+		}
+
+		verifyHsql();
 	}
 
 }

@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dataset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="dataset.xsd">
+	<TABLE1 ID="1" A1="a" INT1="2" DOUBLE1="3.4" DATE1="2013-01-01"
+		TIME1="12:59:45" TIMESTAMP1="2013-01-01 12:59:45.123" />
+	<TABLE1 ID="1" A1="a" INT1="2" DOUBLE1="3.4" DATE1="2013-01-01"
+		TIME1="12:59:45" TIMESTAMP1="2013-01-01 12:59:45.123" />
+	<TABLE2 ID="1" TABLE1ID="1" A2="b" INT2="3" />
+	<TABLE2 ID="1" TABLE1ID="1" A2="b" INT2="3" />
+	<TABLE1 />
+	<TABLE2 />
+</dataset>

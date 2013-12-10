@@ -1,28 +1,83 @@
 package net.sf.lightairmp.dbmaintainer;
 
+import static org.unitils.core.dbsupport.DbSupportFactory.*;
+import static org.unitils.core.util.ConfigUtils.*;
 import static org.unitils.thirdparty.org.apache.commons.io.IOUtils.*;
+import static org.unitils.util.PropertyUtils.*;
 
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.Writer;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 
+import org.apache.commons.lang.StringUtils;
 import org.unitils.core.UnitilsException;
 import org.unitils.core.dbsupport.DbSupport;
+import org.unitils.core.dbsupport.DbSupportFactory;
+import org.unitils.core.dbsupport.SQLHandler;
 import org.unitils.util.PropertyUtils;
 
 public class XsdDataSetStructureGenerator extends
 		org.unitils.dbmaintainer.structure.impl.XsdDataSetStructureGenerator {
 
 	private String complexTypeSuffix;
+	private final String profile;
+
+	public XsdDataSetStructureGenerator(String profile) {
+		this.profile = profile;
+	}
 
 	@Override
 	protected void doInit(Properties configuration) {
 		super.doInit(configuration);
 		complexTypeSuffix = PropertyUtils.getString(
 				PROPKEY_XSD_COMPLEX_TYPE_SUFFIX, configuration);
+		dbSupports = getDbSupports(configuration, sqlHandler);
+		defaultDbSupport = getDefaultDbSupport(configuration, sqlHandler);
+	}
+
+	private List<DbSupport> getDbSupports(Properties configuration,
+			SQLHandler sqlHandler) {
+		List<DbSupport> result = new ArrayList<DbSupport>();
+		List<String> schemaNames = getStringList(
+				DbSupportFactory.PROPKEY_DATABASE_SCHEMA_NAMES, configuration,
+				true);
+		for (String schemaName : schemaNames) {
+			DbSupport dbSupport = getDbSupport(configuration, sqlHandler,
+					schemaName);
+			result.add(dbSupport);
+		}
+		return result;
+	}
+
+	private DbSupport getDbSupport(Properties configuration,
+			SQLHandler sqlHandler, String schemaName) {
+		DbSupport dbSupport;
+		String databaseDialect = getString(
+				DbSupportFactory.PROPKEY_DATABASE_DIALECT, configuration);
+		dbSupport = getInstanceOf(DbSupport.class, configuration,
+				databaseDialect);
+		dbSupport.init(configuration, sqlHandler, schemaName);
+		return dbSupport;
+	}
+
+	public DbSupport getDefaultDbSupport(Properties configuration,
+			SQLHandler sqlHandler) {
+		String defaultSchemaName = getStringList(PROPKEY_DATABASE_SCHEMA_NAMES,
+				configuration, true).get(0);
+		return getDbSupport(configuration, sqlHandler, defaultSchemaName);
+	}
+
+	private String getProfileSuffix() {
+		String suffix = "";
+		if (!StringUtils.isBlank(profile)) {
+			suffix = "-" + profile;
+		}
+		return suffix;
 	}
 
 	@Override
@@ -30,7 +85,7 @@ public class XsdDataSetStructureGenerator extends
 		Writer writer = null;
 		try {
 			writer = new BufferedWriter(new FileWriter(new File(xsdDirectory,
-					"dataset.xsd")));
+					"dataset" + getProfileSuffix() + ".xsd")));
 
 			String defaultSchemaName = defaultDbSupport.getSchemaName();
 			writer.write("<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n");
@@ -40,7 +95,8 @@ public class XsdDataSetStructureGenerator extends
 			for (DbSupport dbSupport : dbSupports) {
 				String schemaName = dbSupport.getSchemaName();
 				writer.write("\t<xsd:import namespace=\"" + schemaName
-						+ "\" schemaLocation=\"" + schemaName + ".xsd\" />\n");
+						+ "\" schemaLocation=\"" + schemaName
+						+ getProfileSuffix() + ".xsd\" />\n");
 			}
 
 			writer.write("\t<xsd:element name=\"dataset\">\n");
@@ -66,6 +122,48 @@ public class XsdDataSetStructureGenerator extends
 			writer.write("\t\t\t</xsd:choice>\n");
 			writer.write("\t\t</xsd:complexType>\n");
 			writer.write("\t</xsd:element>\n");
+			writer.write("</xsd:schema>\n");
+
+		} catch (Exception e) {
+			throw new UnitilsException("Error generating xsd file: "
+					+ xsdDirectory, e);
+		} finally {
+			closeQuietly(writer);
+		}
+	}
+
+	@Override
+	protected void generateDatabaseSchemaXsd(DbSupport dbSupport,
+			File xsdDirectory) {
+		Writer writer = null;
+		try {
+			writer = new BufferedWriter(new FileWriter(new File(xsdDirectory,
+					dbSupport.getSchemaName() + getProfileSuffix() + ".xsd")));
+
+			writer.write("<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n");
+			writer.write("<xsd:schema xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" elementFormDefault=\"qualified\" xmlns=\""
+					+ dbSupport.getSchemaName()
+					+ "\" targetNamespace=\""
+					+ dbSupport.getSchemaName() + "\">\n");
+
+			Set<String> tableNames = dbSupport.getTableNames();
+			for (String tableName : tableNames) {
+				writer.write("\t<xsd:element name=\"" + tableName
+						+ "\" type=\"" + tableName + complexTypeSuffix
+						+ "\" />\n");
+			}
+
+			for (String tableName : tableNames) {
+				writer.write("\t<xsd:complexType name=\"" + tableName
+						+ complexTypeSuffix + "\">\n");
+
+				Set<String> columnNames = dbSupport.getColumnNames(tableName);
+				for (String columnName : columnNames) {
+					writer.write("\t\t<xsd:attribute name=\"" + columnName
+							+ "\" use=\"optional\" />\n");
+				}
+				writer.write("\t</xsd:complexType>\n");
+			}
 			writer.write("</xsd:schema>\n");
 
 		} catch (Exception e) {

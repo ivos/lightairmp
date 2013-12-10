@@ -50,6 +50,8 @@ public class GenerateXsdMojo extends AbstractMojo implements PropertyKeys {
 	 */
 	private File xsdDir;
 
+	private PropertiesProvider propertiesProvider;
+
 	// Standard getters and setters for the properties
 
 	public File getXsdDir() {
@@ -68,29 +70,47 @@ public class GenerateXsdMojo extends AbstractMojo implements PropertyKeys {
 		this.lightAirProperties = lightAirProperties;
 	}
 
+	public PropertiesProvider getPropertiesProvider() {
+		return propertiesProvider;
+	}
+
+	public void setPropertiesProvider(PropertiesProvider propertiesProvider) {
+		this.propertiesProvider = propertiesProvider;
+	}
+
 	/**
 	 * Generate the XSD files.
 	 */
 	public void execute() throws MojoFailureException {
 		getLog().info("Generating DbUnit flat dataset XSD files...");
 
-		PropertiesProvider propertiesProvider = getLightairPropertiesProvider();
-		Properties configuration = getUnitilsConfiguration(propertiesProvider);
+		propertiesProvider = getLightairPropertiesProvider();
 
-		DataSource dataSource = createDataSource(propertiesProvider);
-		SQLHandler sqlHandler = new DefaultSQLHandler(dataSource, false);
-
-		XsdDataSetStructureGenerator generator = new XsdDataSetStructureGenerator();
-		generator.init(configuration, sqlHandler);
-		generator.generateDataSetStructure();
+		for (String profile : propertiesProvider.getProfileNames()) {
+			processProfile(profile);
+		}
 
 		getLog().info("Finished generating DbUnit flat dataset XSD files.");
+	}
+
+	private void processProfile(String profile) throws MojoFailureException {
+		getLog().debug("Generating XSD for profile [" + profile + "]");
+
+		Properties configuration = getUnitilsConfiguration(profile);
+
+		DataSource dataSource = createDataSource(profile);
+		SQLHandler sqlHandler = new DefaultSQLHandler(dataSource, false);
+
+		XsdDataSetStructureGenerator generator = new XsdDataSetStructureGenerator(
+				profile);
+		generator.init(configuration, sqlHandler);
+		generator.generateDataSetStructure();
 	}
 
 	private PropertiesProvider getLightairPropertiesProvider()
 			throws MojoFailureException {
 		FileSystemPropertiesProvider propertiesProvider = new FileSystemPropertiesProvider(
-				lightAirProperties);
+				getLog(), lightAirProperties);
 		propertiesProvider.initFromFileSystem();
 		return propertiesProvider;
 	}
@@ -102,21 +122,20 @@ public class GenerateXsdMojo extends AbstractMojo implements PropertyKeys {
 	 * our own configuration: database dialect, schema names and output
 	 * directory.
 	 * 
-	 * @param propertiesProvider
 	 * @return
 	 * @throws MojoFailureException
 	 */
-	private Properties getUnitilsConfiguration(
-			PropertiesProvider propertiesProvider) throws MojoFailureException {
+	private Properties getUnitilsConfiguration(String profile)
+			throws MojoFailureException {
 		Properties configuration = new Properties();
 		loadUnitilsDefaultValues(configuration);
 		addSupportForH2Database(configuration);
 		addSupportForInformix(configuration);
 
 		configuration.put(DbSupportFactory.PROPKEY_DATABASE_DIALECT,
-				propertiesProvider.getProperty(DATABASE_DIALECT));
+				propertiesProvider.getProperty(profile, DATABASE_DIALECT));
 		configuration.put(DbSupportFactory.PROPKEY_DATABASE_SCHEMA_NAMES,
-				propertiesProvider.getProperty(SCHEMA_NAMES));
+				propertiesProvider.getProperty(profile, SCHEMA_NAMES));
 		configuration.put(XsdDataSetStructureGenerator.PROPKEY_XSD_DIR_NAME,
 				getXsdDirCanonical());
 
@@ -194,33 +213,42 @@ public class GenerateXsdMojo extends AbstractMojo implements PropertyKeys {
 	/**
 	 * Create a datasource to connect to the database.
 	 * 
-	 * @param propertiesProvider
+	 * @param profile
 	 * @return
 	 */
-	private DataSource createDataSource(PropertiesProvider propertiesProvider) {
+	private DataSource createDataSource(String profile) {
 		SingleConnectionDataSource dataSource;
-		getLog().info("Creating database connection.");
+		getLog().info(
+				"Creating database connection for profile [" + profile + "]...");
 		StopWatch stopWatch = new StopWatch();
 		stopWatch.start();
-		String driverClassName = propertiesProvider
-				.getProperty(DRIVER_CLASS_NAME);
+		String driverClassName = getProperty(profile, DRIVER_CLASS_NAME);
 		try {
 			Class.forName(driverClassName);
-			Connection connection = DriverManager.getConnection(
-					propertiesProvider.getProperty(CONNECTION_URL),
-					propertiesProvider.getProperty(USER_NAME),
-					propertiesProvider.getProperty(PASSWORD));
+			final String url = getProperty(profile, CONNECTION_URL);
+			final String username = getProperty(profile, USER_NAME);
+			final String password = getProperty(profile, PASSWORD);
+			Connection connection = DriverManager.getConnection(url, username,
+					password);
 			dataSource = new SingleConnectionDataSource(connection, true);
 			stopWatch.stop();
 			getLog().debug(
-					"Created database connection in " + stopWatch.getTime()
-							+ " ms.");
+					"Connection driver=[" + driverClassName + "], url=[" + url
+							+ "], username=[" + username + "], password=["
+							+ password + "].");
+			getLog().debug(
+					"Created database connection for profile [" + profile
+							+ "] in " + stopWatch.getTime() + " ms.");
 		} catch (ClassNotFoundException e) {
 			throw new DatabaseDriverClassNotFoundException(driverClassName, e);
 		} catch (SQLException e) {
 			throw new CreateDatabaseConnectionException(e);
 		}
 		return dataSource;
+	}
+
+	private String getProperty(String profile, String key) {
+		return propertiesProvider.getProperty(profile, key);
 	}
 
 }
