@@ -106,8 +106,9 @@ public class XsdDataSetStructureGenerator extends
 			Set<String> defaultSchemaTableNames = defaultDbSupport
 					.getTableNames();
 			for (String tableName : defaultSchemaTableNames) {
-				writer.write("\t\t\t\t<xsd:element name=\"" + tableName
-						+ "\" type=\"dflt:" + tableName + complexTypeSuffix
+				writer.write("\t\t\t\t<xsd:element name=\""
+						+ tableName.toLowerCase() + "\" type=\"dflt:"
+						+ tableName.toLowerCase() + complexTypeSuffix
 						+ "\" />\n");
 			}
 
@@ -150,18 +151,19 @@ public class XsdDataSetStructureGenerator extends
 
 			Set<String> tableNames = dbSupport.getTableNames();
 			for (String tableName : tableNames) {
-				writer.write("\t<xsd:element name=\"" + tableName
-						+ "\" type=\"" + tableName + complexTypeSuffix
-						+ "\" />\n");
+				writer.write("\t<xsd:element name=\"" + tableName.toLowerCase()
+						+ "\" type=\"" + tableName.toLowerCase()
+						+ complexTypeSuffix + "\" />\n");
 			}
 
 			for (String tableName : tableNames) {
-				writer.write("\t<xsd:complexType name=\"" + tableName
-						+ complexTypeSuffix + "\">\n");
+				writer.write("\t<xsd:complexType name=\""
+						+ tableName.toLowerCase() + complexTypeSuffix + "\">\n");
 
 				Set<String> columnNames = dbSupport.getColumnNames(tableName);
 				for (String columnName : columnNames) {
-					writer.write("\t\t<xsd:attribute name=\"" + columnName
+					writer.write("\t\t<xsd:attribute name=\""
+							+ columnName.toLowerCase()
 							+ "\" use=\"optional\" type=\"la:ColumnType\" />\n");
 				}
 				writer.write("\t</xsd:complexType>\n");

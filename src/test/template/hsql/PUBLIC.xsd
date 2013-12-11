@@ -2,21 +2,21 @@
 <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" xmlns="PUBLIC" targetNamespace="PUBLIC"
 	xmlns:la="http://lightair.sourceforge.net/">
 	<xsd:import namespace="http://lightair.sourceforge.net/" schemaLocation="light-air-types.xsd" />
-	<xsd:element name="TABLE1" type="TABLE1__type" />
-	<xsd:element name="TABLE2" type="TABLE2__type" />
-	<xsd:complexType name="TABLE1__type">
-		<xsd:attribute name="A1" use="optional" type="la:ColumnType" />
-		<xsd:attribute name="TIMESTAMP1" use="optional" type="la:ColumnType" />
-		<xsd:attribute name="DATE1" use="optional" type="la:ColumnType" />
-		<xsd:attribute name="TIME1" use="optional" type="la:ColumnType" />
-		<xsd:attribute name="ID" use="optional" type="la:ColumnType" />
-		<xsd:attribute name="DOUBLE1" use="optional" type="la:ColumnType" />
-		<xsd:attribute name="INT1" use="optional" type="la:ColumnType" />
+	<xsd:element name="table1" type="table1__type" />
+	<xsd:element name="table2" type="table2__type" />
+	<xsd:complexType name="table1__type">
+		<xsd:attribute name="a1" use="optional" type="la:ColumnType" />
+		<xsd:attribute name="timestamp1" use="optional" type="la:ColumnType" />
+		<xsd:attribute name="date1" use="optional" type="la:ColumnType" />
+		<xsd:attribute name="time1" use="optional" type="la:ColumnType" />
+		<xsd:attribute name="id" use="optional" type="la:ColumnType" />
+		<xsd:attribute name="double1" use="optional" type="la:ColumnType" />
+		<xsd:attribute name="int1" use="optional" type="la:ColumnType" />
 	</xsd:complexType>
-	<xsd:complexType name="TABLE2__type">
-		<xsd:attribute name="A2" use="optional" type="la:ColumnType" />
-		<xsd:attribute name="ID" use="optional" type="la:ColumnType" />
-		<xsd:attribute name="INT2" use="optional" type="la:ColumnType" />
-		<xsd:attribute name="TABLE1ID" use="optional" type="la:ColumnType" />
+	<xsd:complexType name="table2__type">
+		<xsd:attribute name="a2" use="optional" type="la:ColumnType" />
+		<xsd:attribute name="id" use="optional" type="la:ColumnType" />
+		<xsd:attribute name="int2" use="optional" type="la:ColumnType" />
+		<xsd:attribute name="table1id" use="optional" type="la:ColumnType" />
 	</xsd:complexType>
 </xsd:schema>

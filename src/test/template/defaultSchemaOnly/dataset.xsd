@@ -7,8 +7,8 @@
 	<xsd:element name="dataset">
 		<xsd:complexType>
 			<xsd:choice minOccurs="0" maxOccurs="unbounded">
-				<xsd:element name="TABLE1" type="dflt:TABLE1__type" />
-				<xsd:element name="TABLE2" type="dflt:TABLE2__type" />
+				<xsd:element name="table1" type="dflt:table1__type" />
+				<xsd:element name="table2" type="dflt:table2__type" />
 				<xsd:any namespace="PUBLIC" />
 				<xsd:any namespace="SCHEMA1" />
 				<xsd:any namespace="SCHEMA2" />

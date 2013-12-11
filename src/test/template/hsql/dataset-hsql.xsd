@@ -4,7 +4,7 @@
 	<xsd:element name="dataset">
 		<xsd:complexType>
 			<xsd:choice minOccurs="0" maxOccurs="unbounded">
-				<xsd:element name="TABLEHSQL" type="dflt:TABLEHSQL__type" />
+				<xsd:element name="tablehsql" type="dflt:tablehsql__type" />
 				<xsd:any namespace="PUBLIC" />
 			</xsd:choice>
 		</xsd:complexType>

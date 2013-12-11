@@ -7,10 +7,10 @@
 		SCHEMA2 SCHEMA2.xsd
 		SCHEMA3 SCHEMA3.xsd
 	">
-	<S3:TABLE31 ID="" />
-	<S3:TABLE33 DOUBLE6="" />
-	<S1:TABLE11 ID="" A1="" INT1="" DOUBLE1="" DATE1="" TIME1=""
-		TIMESTAMP1="" />
-	<S1:TABLE12 A2="" ID="" INT2="" />
-	<S2:TABLE21 ID="" A3="" INT3="" />
+	<S3:table31 id="" />
+	<S3:table33 double6="" />
+	<S1:table11 id="" a1="" int1="" double1="" date1="" time1=""
+		timestamp1="" />
+	<S1:table12 a2="@null" id="@null" int2="@null" />
+	<S2:table21 id="@null" a3="@null" int3="@null" />
 </dataset>

@@ -2,11 +2,11 @@
 <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" xmlns="PUBLIC" targetNamespace="PUBLIC"
 	xmlns:la="http://lightair.sourceforge.net/">
 	<xsd:import namespace="http://lightair.sourceforge.net/" schemaLocation="light-air-types.xsd" />
-	<xsd:element name="TABLEHSQL" type="TABLEHSQL__type" />
-	<xsd:complexType name="TABLEHSQL__type">
-		<xsd:attribute name="INTHSQL" use="optional" type="la:ColumnType" />
-		<xsd:attribute name="ID" use="optional" type="la:ColumnType" />
-		<xsd:attribute name="AHSQL" use="optional" type="la:ColumnType" />
-		<xsd:attribute name="TABLEHSQLID" use="optional" type="la:ColumnType" />
+	<xsd:element name="tablehsql" type="tablehsql__type" />
+	<xsd:complexType name="tablehsql__type">
+		<xsd:attribute name="inthsql" use="optional" type="la:ColumnType" />
+		<xsd:attribute name="id" use="optional" type="la:ColumnType" />
+		<xsd:attribute name="ahsql" use="optional" type="la:ColumnType" />
+		<xsd:attribute name="tablehsqlid" use="optional" type="la:ColumnType" />
 	</xsd:complexType>
 </xsd:schema>
