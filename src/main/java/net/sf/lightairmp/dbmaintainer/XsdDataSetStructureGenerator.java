@@ -144,7 +144,9 @@ public class XsdDataSetStructureGenerator extends
 			writer.write("<xsd:schema xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" elementFormDefault=\"qualified\" xmlns=\""
 					+ dbSupport.getSchemaName()
 					+ "\" targetNamespace=\""
-					+ dbSupport.getSchemaName() + "\">\n");
+					+ dbSupport.getSchemaName() + "\"\n");
+			writer.write("\txmlns:la=\"http://lightair.sourceforge.net/\">\n");
+			writer.write("\t<xsd:import namespace=\"http://lightair.sourceforge.net/\" schemaLocation=\"light-air-types.xsd\" />\n");
 
 			Set<String> tableNames = dbSupport.getTableNames();
 			for (String tableName : tableNames) {
@@ -160,7 +162,7 @@ public class XsdDataSetStructureGenerator extends
 				Set<String> columnNames = dbSupport.getColumnNames(tableName);
 				for (String columnName : columnNames) {
 					writer.write("\t\t<xsd:attribute name=\"" + columnName
-							+ "\" use=\"optional\" />\n");
+							+ "\" use=\"optional\" type=\"la:ColumnType\" />\n");
 				}
 				writer.write("\t</xsd:complexType>\n");
 			}

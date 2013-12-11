@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" xmlns="PUBLIC" targetNamespace="PUBLIC">
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" xmlns="PUBLIC" targetNamespace="PUBLIC"
+	xmlns:la="http://lightair.sourceforge.net/">
+	<xsd:import namespace="http://lightair.sourceforge.net/" schemaLocation="light-air-types.xsd" />
 	<xsd:element name="TABLEHSQL" type="TABLEHSQL__type" />
 	<xsd:complexType name="TABLEHSQL__type">
-		<xsd:attribute name="INTHSQL" use="optional" />
-		<xsd:attribute name="ID" use="optional" />
-		<xsd:attribute name="AHSQL" use="optional" />
-		<xsd:attribute name="TABLEHSQLID" use="optional" />
+		<xsd:attribute name="INTHSQL" use="optional" type="la:ColumnType" />
+		<xsd:attribute name="ID" use="optional" type="la:ColumnType" />
+		<xsd:attribute name="AHSQL" use="optional" type="la:ColumnType" />
+		<xsd:attribute name="TABLEHSQLID" use="optional" type="la:ColumnType" />
 	</xsd:complexType>
 </xsd:schema>

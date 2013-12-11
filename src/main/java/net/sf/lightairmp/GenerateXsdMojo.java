@@ -1,7 +1,13 @@
 package net.sf.lightairmp;
 
+import static org.unitils.thirdparty.org.apache.commons.io.IOUtils.*;
+
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.Writer;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -15,11 +21,13 @@ import net.sf.lightair.internal.properties.PropertyKeys;
 import net.sf.lightairmp.dbmaintainer.XsdDataSetStructureGenerator;
 import net.sf.lightairmp.exception.DatabaseDriverClassNotFoundException;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.time.StopWatch;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoFailureException;
 import org.springframework.jdbc.datasource.SingleConnectionDataSource;
 import org.unitils.core.ConfigurationLoader;
+import org.unitils.core.UnitilsException;
 import org.unitils.core.dbsupport.DbSupportFactory;
 import org.unitils.core.dbsupport.DefaultSQLHandler;
 import org.unitils.core.dbsupport.SQLHandler;
@@ -89,6 +97,7 @@ public class GenerateXsdMojo extends AbstractMojo implements PropertyKeys {
 		for (String profile : propertiesProvider.getProfileNames()) {
 			processProfile(profile);
 		}
+		generateLightAirTypes();
 
 		getLog().info("Finished generating DbUnit flat dataset XSD files.");
 	}
@@ -249,6 +258,21 @@ public class GenerateXsdMojo extends AbstractMojo implements PropertyKeys {
 
 	private String getProperty(String profile, String key) {
 		return propertiesProvider.getProperty(profile, key);
+	}
+
+	public void generateLightAirTypes() {
+		Writer writer = null;
+		final File file = new File(xsdDir, "light-air-types.xsd");
+		try {
+			writer = new BufferedWriter(new FileWriter(file));
+			InputStream inputStream = getClass().getClassLoader()
+					.getResourceAsStream("light-air-types.xsd");
+			IOUtils.copy(inputStream, writer);
+		} catch (Exception e) {
+			throw new UnitilsException("Error generating xsd file: " + file, e);
+		} finally {
+			closeQuietly(writer);
+		}
 	}
 
 }

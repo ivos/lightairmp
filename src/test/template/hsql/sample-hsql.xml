@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <dataset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:noNamespaceSchemaLocation="dataset-hsql.xsd">
-	<TABLEHSQL ID="1" TABLEHSQLID="2" AHSQL="a" INTHSQL="3" />
+	<TABLEHSQL ID="1" TABLEHSQLID="2" AHSQL="a" INTHSQL="@timestamp+PT1S" />
 	<TABLEHSQL />
-	<TABLEHSQL ID="5" TABLEHSQLID="6" AHSQL="bcdef" INTHSQL="789" />
+	<TABLEHSQL ID="5" TABLEHSQLID="6" AHSQL="bcdef" INTHSQL="" />
 </dataset>

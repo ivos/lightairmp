@@ -1,20 +1,22 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" xmlns="SCHEMA1" targetNamespace="SCHEMA1">
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" xmlns="SCHEMA1" targetNamespace="SCHEMA1"
+	xmlns:la="http://lightair.sourceforge.net/">
+	<xsd:import namespace="http://lightair.sourceforge.net/" schemaLocation="light-air-types.xsd" />
 	<xsd:element name="TABLE11" type="TABLE11__type" />
 	<xsd:element name="TABLE12" type="TABLE12__type" />
 	<xsd:complexType name="TABLE11__type">
-		<xsd:attribute name="A1" use="optional" />
-		<xsd:attribute name="TIMESTAMP1" use="optional" />
-		<xsd:attribute name="DATE1" use="optional" />
-		<xsd:attribute name="TIME1" use="optional" />
-		<xsd:attribute name="ID" use="optional" />
-		<xsd:attribute name="DOUBLE1" use="optional" />
-		<xsd:attribute name="INT1" use="optional" />
+		<xsd:attribute name="A1" use="optional" type="la:ColumnType" />
+		<xsd:attribute name="TIMESTAMP1" use="optional" type="la:ColumnType" />
+		<xsd:attribute name="DATE1" use="optional" type="la:ColumnType" />
+		<xsd:attribute name="TIME1" use="optional" type="la:ColumnType" />
+		<xsd:attribute name="ID" use="optional" type="la:ColumnType" />
+		<xsd:attribute name="DOUBLE1" use="optional" type="la:ColumnType" />
+		<xsd:attribute name="INT1" use="optional" type="la:ColumnType" />
 	</xsd:complexType>
 	<xsd:complexType name="TABLE12__type">
-		<xsd:attribute name="A2" use="optional" />
-		<xsd:attribute name="ID" use="optional" />
-		<xsd:attribute name="INT2" use="optional" />
-		<xsd:attribute name="TABLE1ID" use="optional" />
+		<xsd:attribute name="A2" use="optional" type="la:ColumnType" />
+		<xsd:attribute name="ID" use="optional" type="la:ColumnType" />
+		<xsd:attribute name="INT2" use="optional" type="la:ColumnType" />
+		<xsd:attribute name="TABLE1ID" use="optional" type="la:ColumnType" />
 	</xsd:complexType>
 </xsd:schema>

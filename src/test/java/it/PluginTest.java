@@ -86,6 +86,8 @@ public class PluginTest extends TemplatingTestBase {
 	}
 
 	private void verify(String test) throws Exception {
+		performTest(test + "/light-air-types.xsd", "light-air-types.xsd");
+
 		performTest(test + "/dataset.xsd", "dataset.xsd");
 		performTest(test + "/PUBLIC.xsd", "PUBLIC.xsd");
 		performTest(test + "/SCHEMA1.xsd", "SCHEMA1.xsd");
@@ -95,6 +97,8 @@ public class PluginTest extends TemplatingTestBase {
 	}
 
 	private void verifyHsql() throws Exception {
+		performTest("hsql/light-air-types.xsd", "light-air-types.xsd");
+
 		performTest("hsql/dataset.xsd", "dataset.xsd");
 		performTest("hsql/PUBLIC.xsd", "PUBLIC.xsd");
 		validateXsdConformance(DEFAULT_TEMPLATES_BASE_DIR + "hsql", "");
