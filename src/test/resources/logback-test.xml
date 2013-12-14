@@ -4,7 +4,10 @@
 			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
 		</encoder>
 	</appender>
-	<!-- <logger name="net.sf.lightairmp" level="trace" /> -->
+
+	<!--
+	<logger name="net.sf.lightair" level="trace" />
+	-->
 	<root level="off">
 		<appender-ref ref="stdout" />
 	</root>
