@@ -1,6 +1,5 @@
 package org.unitils.core.dbsupport;
 
-import java.util.Collections;
 import java.util.Set;
 
 public class InformixDbSupport extends DbSupport {
@@ -28,7 +27,9 @@ public class InformixDbSupport extends DbSupport {
 
 	@Override
 	public Set<String> getViewNames() {
-		return Collections.emptySet();
+		return getSQLHandler().getItemsAsStringSet(
+				"select tabname from systables where owner = '"
+						+ getSchemaName() + "' and tabtype = 'V'");
 	}
 
 	@Override

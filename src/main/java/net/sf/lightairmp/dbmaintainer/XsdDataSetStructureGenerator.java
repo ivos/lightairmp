@@ -105,6 +105,10 @@ public class XsdDataSetStructureGenerator extends
 
 			Set<String> defaultSchemaTableNames = defaultDbSupport
 					.getTableNames();
+			Set<String> defaultSchemaViewNames = defaultDbSupport
+					.getViewNames();
+			defaultSchemaTableNames.addAll(defaultSchemaViewNames);
+
 			for (String tableName : defaultSchemaTableNames) {
 				writer.write("\t\t\t\t<xsd:element name=\""
 						+ tableName.toLowerCase() + "\" type=\"dflt:"
@@ -150,6 +154,9 @@ public class XsdDataSetStructureGenerator extends
 			writer.write("\t<xsd:import namespace=\"http://lightair.sourceforge.net/\" schemaLocation=\"light-air-types.xsd\" />\n");
 
 			Set<String> tableNames = dbSupport.getTableNames();
+			Set<String> viewNames = dbSupport.getViewNames();
+			tableNames.addAll(viewNames);
+
 			for (String tableName : tableNames) {
 				writer.write("\t<xsd:element name=\"" + tableName.toLowerCase()
 						+ "\" type=\"" + tableName.toLowerCase()
