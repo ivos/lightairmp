@@ -6,12 +6,12 @@
 	<xsd:element name="table2" type="table2__type" />
 	<xsd:complexType name="table1__type">
 		<xsd:attribute name="a1" use="optional" type="la:ColumnType" />
-		<xsd:attribute name="timestamp1" use="optional" type="la:ColumnType" />
 		<xsd:attribute name="date1" use="optional" type="la:ColumnType" />
-		<xsd:attribute name="time1" use="optional" type="la:ColumnType" />
-		<xsd:attribute name="id" use="optional" type="la:ColumnType" />
 		<xsd:attribute name="double1" use="optional" type="la:ColumnType" />
+		<xsd:attribute name="id" use="optional" type="la:ColumnType" />
 		<xsd:attribute name="int1" use="optional" type="la:ColumnType" />
+		<xsd:attribute name="time1" use="optional" type="la:ColumnType" />
+		<xsd:attribute name="timestamp1" use="optional" type="la:ColumnType" />
 	</xsd:complexType>
 	<xsd:complexType name="table2__type">
 		<xsd:attribute name="a2" use="optional" type="la:ColumnType" />

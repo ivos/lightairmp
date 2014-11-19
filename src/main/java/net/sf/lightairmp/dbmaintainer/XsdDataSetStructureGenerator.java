@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.Writer;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 import java.util.Set;
@@ -153,9 +154,10 @@ public class XsdDataSetStructureGenerator extends
 			writer.write("\txmlns:la=\"http://lightair.sourceforge.net/\">\n");
 			writer.write("\t<xsd:import namespace=\"http://lightair.sourceforge.net/\" schemaLocation=\"light-air-types.xsd\" />\n");
 
-			Set<String> tableNames = dbSupport.getTableNames();
-			Set<String> viewNames = dbSupport.getViewNames();
-			tableNames.addAll(viewNames);
+			List<String> tableNames = new ArrayList<String>(
+					dbSupport.getTableNames());
+			tableNames.addAll(new ArrayList<String>(dbSupport.getViewNames()));
+			Collections.sort(tableNames);
 
 			for (String tableName : tableNames) {
 				writer.write("\t<xsd:element name=\"" + tableName.toLowerCase()
@@ -167,7 +169,9 @@ public class XsdDataSetStructureGenerator extends
 				writer.write("\t<xsd:complexType name=\""
 						+ tableName.toLowerCase() + complexTypeSuffix + "\">\n");
 
-				Set<String> columnNames = dbSupport.getColumnNames(tableName);
+				List<String> columnNames = new ArrayList<String>(
+						dbSupport.getColumnNames(tableName));
+				Collections.sort(columnNames);
 				for (String columnName : columnNames) {
 					writer.write("\t\t<xsd:attribute name=\""
 							+ columnName.toLowerCase()
