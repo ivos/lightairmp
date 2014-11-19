@@ -3,7 +3,7 @@
 
 	<groupId>net.sf.lightairmp</groupId>
 	<artifactId>light-air-maven-plugin</artifactId>
-	<version>0.4-SNAPSHOT</version>
+	<version>0.4</version>
 	<packaging>maven-plugin</packaging>
 
 	<name>Light Air Maven Plugin</name>
