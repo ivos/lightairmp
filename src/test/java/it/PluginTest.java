@@ -42,27 +42,27 @@ public class PluginTest extends TemplatingTestBase {
 	}
 
 	private void createDefaultSchema() {
+		db.execute("create table table2 (id int primary key, table1id int, a2 varchar(255), int2 int)");
 		db.execute("create table table1 (id int primary key, a1 varchar(255), int1 int, "
 				+ "double1 double, date1 date, time1 time, timestamp1 timestamp)");
-		db.execute("create table table2 (id int primary key, table1id int, a2 varchar(255), int2 int)");
 	}
 
 	private void dropDefaultSchema() {
-		db.execute("drop table table1 if exists");
 		db.execute("drop table table2 if exists");
+		db.execute("drop table table1 if exists");
 	}
 
 	private void createOtherSchemas() {
-		db.execute("create schema schema1");
-		db.execute("create schema schema2");
 		db.execute("create schema schema3");
+		db.execute("create schema schema2");
+		db.execute("create schema schema1");
+		db.execute("create table schema3.table33 (id int primary key, a6 varchar(255), double6 double)");
+		db.execute("create table schema3.table32 (id int primary key, a5 varchar(255), date5 date)");
+		db.execute("create table schema3.table31 (id int primary key, a4 varchar(255), int4 int, time4 time)");
+		db.execute("create table schema2.table21 (id int primary key, a3 varchar(255), int3 int)");
+		db.execute("create table schema1.table12 (id int primary key, table1id int, a2 varchar(255), int2 int)");
 		db.execute("create table schema1.table11 (id int primary key, a1 varchar(255), int1 int, "
 				+ "double1 double, date1 date, time1 time, timestamp1 timestamp)");
-		db.execute("create table schema1.table12 (id int primary key, table1id int, a2 varchar(255), int2 int)");
-		db.execute("create table schema2.table21 (id int primary key, a3 varchar(255), int3 int)");
-		db.execute("create table schema3.table31 (id int primary key, a4 varchar(255), int4 int, time4 time)");
-		db.execute("create table schema3.table32 (id int primary key, a5 varchar(255), date5 date)");
-		db.execute("create table schema3.table33 (id int primary key, a6 varchar(255), double6 double)");
 	}
 
 	private void dropOtherSchemas() {

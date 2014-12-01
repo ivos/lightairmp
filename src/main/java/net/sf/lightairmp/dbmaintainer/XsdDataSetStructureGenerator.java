@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
-import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 import org.unitils.core.UnitilsException;
@@ -47,6 +46,7 @@ public class XsdDataSetStructureGenerator extends
 		List<String> schemaNames = getStringList(
 				DbSupportFactory.PROPKEY_DATABASE_SCHEMA_NAMES, configuration,
 				true);
+		Collections.sort(schemaNames);
 		for (String schemaName : schemaNames) {
 			DbSupport dbSupport = getDbSupport(configuration, sqlHandler,
 					schemaName);
@@ -104,11 +104,12 @@ public class XsdDataSetStructureGenerator extends
 			writer.write("\t\t<xsd:complexType>\n");
 			writer.write("\t\t\t<xsd:choice minOccurs=\"0\" maxOccurs=\"unbounded\">\n");
 
-			Set<String> defaultSchemaTableNames = defaultDbSupport
-					.getTableNames();
-			Set<String> defaultSchemaViewNames = defaultDbSupport
-					.getViewNames();
+			List<String> defaultSchemaTableNames = new ArrayList<String>(
+					defaultDbSupport.getTableNames());
+			List<String> defaultSchemaViewNames = new ArrayList<String>(
+					defaultDbSupport.getViewNames());
 			defaultSchemaTableNames.addAll(defaultSchemaViewNames);
+			Collections.sort(defaultSchemaTableNames);
 
 			for (String tableName : defaultSchemaTableNames) {
 				writer.write("\t\t\t\t<xsd:element name=\""
