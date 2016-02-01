@@ -44,9 +44,9 @@
 	</properties>
 
 	<scm>
-		<connection>scm:git:git://git.code.sf.net/p/lightairmp/code</connection>
-		<developerConnection>scm:git:ssh://imaixner@git.code.sf.net/p/lightairmp/code</developerConnection>
-		<url>http://sourceforge.net/p/lightairmp/code</url>
+		<connection>scm:git:git@github.com:ivos/lightairmp.git</connection>
+		<developerConnection>scm:git:git@github.com:ivos/lightairmp.git</developerConnection>
+		<url>https://github.com/ivos/lightairmp</url>
 	</scm>
 	<distributionManagement>
 		<snapshotRepository>
