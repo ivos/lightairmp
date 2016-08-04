@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:la="http://lightair.sourceforge.net/">
+	<xsd:import namespace="http://lightair.sourceforge.net/" schemaLocation="light-air-types.xsd"/>
+
+	<xsd:element name="dataset">
+		<xsd:complexType>
+			<xsd:choice minOccurs="0" maxOccurs="unbounded">
+				<xsd:element name="tablehsql" type="tablehsql__Type"/>
+			</xsd:choice>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:complexType name="tablehsql__Type">
+		<xsd:attribute name="id" use="optional" type="la:IntegerType"/>
+		<xsd:attribute name="tablehsqlid" use="optional" type="la:IntegerNullableType"/>
+		<xsd:attribute name="ahsql" use="optional" type="la:StringNullableType"/>
+		<xsd:attribute name="inthsql" use="optional" type="la:IntegerNullableType"/>
+	</xsd:complexType>
+</xsd:schema>
