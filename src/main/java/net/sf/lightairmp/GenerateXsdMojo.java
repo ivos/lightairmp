@@ -4,20 +4,19 @@ import net.sf.lightair.internal.Api;
 import net.sf.lightair.internal.properties.PropertyKeys;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoFailureException;
+import org.apache.maven.plugins.annotations.Mojo;
+import org.apache.maven.plugins.annotations.Parameter;
 
 /**
  * Generate XSD from database.
- *
- * @goal generate-xsd
  */
+@Mojo(name = "generate-xsd")
 public class GenerateXsdMojo extends AbstractMojo implements PropertyKeys {
 
 	/**
-	 * Path to Light Air properties file. Defaults to {@code light-air.properties}.
-	 *
-	 * @parameter property="light-air.properties"
-	 * @required
+	 * Path to Light Air properties file. Defaults to {@code target/test-classes/light-air.properties}.
 	 */
+	@Parameter(defaultValue = "target/test-classes/light-air.properties")
 	private String lightAirProperties;
 
 	// Standard getters and setters for the properties

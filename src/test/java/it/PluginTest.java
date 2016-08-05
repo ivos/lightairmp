@@ -115,7 +115,7 @@ public class PluginTest extends TemplatingTestBase {
 		try {
 			createDefaultSchema();
 
-			createMojo("light-air.properties").execute();
+			createMojo("target/test-classes/light-air.properties").execute();
 		} finally {
 			dropDefaultSchema();
 		}
@@ -132,7 +132,7 @@ public class PluginTest extends TemplatingTestBase {
 			createHsql();
 			createOtherSchema();
 
-			createMojo("light-air-profiles.properties").execute();
+			createMojo("target/test-classes/light-air-profiles.properties").execute();
 		} finally {
 			dropHsql();
 			dropDefaultSchema();
