@@ -211,6 +211,7 @@
 										<versionRange>[1.0,)</versionRange>
 										<goals>
 											<goal>descriptor</goal>
+											<goal>helpmojo</goal>
 										</goals>
 									</pluginExecutionFilter>
 									<action>

@@ -72,30 +72,15 @@ public class PluginTest extends TemplatingTestBase {
 		dbHsql.execute("drop table tableHsql if exists");
 	}
 
-	private void verifyProfiles() throws Exception {
-		performTest("profiles/light-air-types.xsd", "light-air-types.xsd");
-		performTest("profiles/dataset.xsd", "dataset.xsd");
-		validateXsdConformance(DEFAULT_TEMPLATES_BASE_DIR + "hsql", "");
-
-		performTest("profiles/dataset-hsql.xsd", "dataset-hsql.xsd");
-		performTest("profiles/PUBLIC-hsql.xsd", "PUBLIC-hsql.xsd");
-		validateXsdConformance(DEFAULT_TEMPLATES_BASE_DIR + "hsql", "-hsql");
-	}
-
-	private void validateXsdConformance(String path, String suffix)
-			throws Exception {
-		Source xmlFile = new StreamSource(new File(path + "/sample" + suffix
-				+ ".xml"));
-		SchemaFactory schemaFactory = SchemaFactory
-				.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-		Schema schema = schemaFactory.newSchema(new File(path + "/dataset"
-				+ suffix + ".xsd"));
+	private void validateXsdConformance(String path, String suffix) throws Exception {
+		Source xmlFile = new StreamSource(new File(path + "/sample" + suffix + ".xml"));
+		SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+		Schema schema = schemaFactory.newSchema(new File(path + "/dataset" + suffix + ".xsd"));
 		Validator validator = schema.newValidator();
 		try {
 			validator.validate(xmlFile);
 		} catch (SAXException e) {
-			Assert.fail("Sample XML file is not valid by generated XSD. "
-					+ e.getLocalizedMessage());
+			Assert.fail("Sample XML file is not valid by generated XSD. " + e.getLocalizedMessage());
 		}
 	}
 
