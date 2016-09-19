@@ -1,10 +1,9 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>net.sf.lightairmp</groupId>
 	<artifactId>light-air-maven-plugin</artifactId>
-	<version>3.0-SNAPSHOT</version>
+	<version>3.0</version>
 	<packaging>maven-plugin</packaging>
 
 	<name>Light Air Maven Plugin</name>
@@ -48,7 +47,7 @@
 		<connection>scm:git:git@github.com:ivos/lightairmp.git</connection>
 		<developerConnection>scm:git:git@github.com:ivos/lightairmp.git</developerConnection>
 		<url>https://github.com/ivos/lightairmp</url>
-		<tag>HEAD</tag>
+		<tag>light-air-maven-plugin-3.0</tag>
 	</scm>
 	<distributionManagement>
 		<snapshotRepository>
@@ -181,7 +180,7 @@
 										</goals>
 									</pluginExecutionFilter>
 									<action>
-										<ignore/>
+										<ignore />
 									</action>
 								</pluginExecution>
 							</pluginExecutions>
