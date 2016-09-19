@@ -8,9 +8,9 @@
 
 LightAir Maven plugin
 
- The LightAir Maven plugin <<generates XSD files>> to enable writing <<DbUnit flat datasets>>.
+ The LightAir Maven plugin <<generates XSD files>> to enable writing <<Light Air datasets>>.
  
- It does so by connecting to the database and reading tables definitions.
+ It does so by connecting to the database and reading the definitions of the tables.
 
 * How to use
 
