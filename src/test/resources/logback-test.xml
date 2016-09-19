@@ -5,9 +5,8 @@
 		</encoder>
 	</appender>
 
-	<!--
 	<logger name="net.sf.lightair" level="trace" />
-	-->
+
 	<root level="off">
 		<appender-ref ref="stdout" />
 	</root>

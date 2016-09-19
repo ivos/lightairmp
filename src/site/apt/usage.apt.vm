@@ -14,43 +14,28 @@ How to use LightAir Maven plugin
 
 +--------+
 <build>
-	<pluginManagement>
-		<plugins>
-			<plugin>
-				<!-- Run to generate XSDs: mvn light-air:generate-xsd -->
-				<groupId>net.sf.lightairmp</groupId>
-				<artifactId>light-air-maven-plugin</artifactId>
-				<version>${currentVersion}</version>
-				<dependencies>
-					<!-- Add dependency to the database that you use in LightAir tests -->
-					<dependency>
-						<groupId>com.h2database</groupId>
-						<artifactId>h2</artifactId>
-						<version>1.3.165</version>
-					</dependency>
-				</dependencies>
-			</plugin>
-		</plugins>
-	</pluginManagement>
+  <pluginManagement>
+    <plugins>
+      <plugin>
+        <!-- Run to generate XSDs: mvn light-air:generate-xsd -->
+        <groupId>net.sf.lightairmp</groupId>
+        <artifactId>light-air-maven-plugin</artifactId>
+        <version>${currentVersion}</version>
+        <dependencies>
+          <!-- Add dependency to the database that you use in LightAir tests -->
+          <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>1.3.165</version>
+          </dependency>
+        </dependencies>
+      </plugin>
+    </plugins>
+  </pluginManagement>
 </build>
 +--------+
 
  Replace the dependency with the database type that you actually use.
-
-* Define schema names in light-air.properties
-
- Make sure you have defined the <<<database.schemaNames>>> property in
- <<<light-air.properties>>> file in <<<src/test/resources>>>.
- 
-+---+
-...
-
-# Names of database schemas from which to generate the XSDs
-# Use a comma-separated list for multiple schemas: SCHEMA1,SCHEMA2,SCHEMA3
-database.schemaNames=PUBLIC
-
-...
-+---+
 
 * Generate the XSD files
 
@@ -70,32 +55,9 @@ database.schemaNames=PUBLIC
 +--------+
 <?xml version='1.0' encoding='UTF-8'?>
 <dataset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:noNamespaceSchemaLocation="../dataset.xsd">
-	<USER ID="1" EMAIL="name@server.com" FIRST_NAME="John" LAST_NAME="Doe" />
-	<USER_SYSTEM_ROLES />
-	<PROJECT />
-</dataset>
-+--------+
-
- When you use multiple database schemas, refer to each schema like this:
-
-+--------+
-<?xml version='1.0' encoding='UTF-8'?>
-<dataset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:noNamespaceSchemaLocation="dataset.xsd" xmlns:S1="SCHEMA1"
-	xmlns:S2="SCHEMA2" xmlns:S3="SCHEMA3"
-	xsi:schemaLocation="
-		SCHEMA1 SCHEMA1.xsd
-		SCHEMA2 SCHEMA2.xsd
-		SCHEMA3 SCHEMA3.xsd
-	">
-	<S3:TABLE31 ID="" />
-	<TABLE1 ID="" A1="" DATE1="" />
-	<S3:TABLE33 DOUBLE6="" />
-	<S1:TABLE11 ID="" A1="" INT1="" DOUBLE1="" DATE1="" TIME1=""
-		TIMESTAMP1="" />
-	<S1:TABLE12 A2="" ID="" INT2="" />
-	<S2:TABLE21 ID="" A3="" INT3="" />
-	<TABLE2 ID="" A2="" INT2="" TABLE1ID="" />
+  xsi:noNamespaceSchemaLocation="../dataset.xsd">
+  <USER ID="1" EMAIL="name@server.com" FIRST_NAME="John" LAST_NAME="Doe" />
+  <USER_SYSTEM_ROLES />
+  <PROJECT />
 </dataset>
 +--------+

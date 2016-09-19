@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<dataset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="dataset.xsd">
+<dataset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="dataset.xsd">
 	<table1 id="1" a1="a" int1="2" double1="3.4" date1="2013-01-01" time1="12:59:45"
 	        timestamp1="2013-01-01T12:59:45.123"/>
 	<table1 id="1" a1="a" int1="2" double1="3.4" date1="2013-01-01" time1="12:59:45"
