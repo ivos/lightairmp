@@ -29,12 +29,7 @@ LightAir Maven plugin
  The LightAir Maven plugin is a supporting tool for the {{{http://lightair.sourceforge.net/}LightAir}}, 
  a testing framework for black-box system test of web applications for developers.
 
- \
- \ 
+* Source code repo
 
-===
-
- LightAir Maven plugin is hosted by Sourceforge.net, see 
- {{{http://sourceforge.net/projects/lightairmp/}LightAir Maven plugin at Sourceforge.net}}.
-
- LightAir Maven plugin is part of {{{http://lightair.sf.net}LightAir}}.
+ Light Air Maven plugin Git repo is hosted by GitHub at
+ {{{https://github.com/ivos/lightairmp}Light Air Maven plugin GitHub repo}}.

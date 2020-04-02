@@ -90,7 +90,7 @@
 		<dependency>
 			<groupId>net.sf.lightair</groupId>
 			<artifactId>light-air</artifactId>
-			<version>3.0.1</version>
+			<version>3.1.0</version>
 		</dependency>
 
 		<!-- test -->
