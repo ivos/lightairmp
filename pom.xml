@@ -3,7 +3,7 @@
 
 	<groupId>net.sf.lightairmp</groupId>
 	<artifactId>light-air-maven-plugin</artifactId>
-	<version>3.0.2-SNAPSHOT</version>
+	<version>3.1.0</version>
 	<packaging>maven-plugin</packaging>
 
 	<name>Light Air Maven Plugin</name>
@@ -47,7 +47,7 @@
 		<connection>scm:git:git@github.com:ivos/lightairmp.git</connection>
 		<developerConnection>scm:git:git@github.com:ivos/lightairmp.git</developerConnection>
 		<url>https://github.com/ivos/lightairmp</url>
-		<tag>HEAD</tag>
+		<tag>light-air-maven-plugin-3.1.0</tag>
 	</scm>
 	<distributionManagement>
 		<snapshotRepository>
