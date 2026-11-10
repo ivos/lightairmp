@@ -1,6 +1,6 @@
 package net.sf.lightairmp;
 
-import net.sf.lightair.Api;
+import net.sf.lightair.LightAirApi;
 import net.sf.lightair.internal.Keywords;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoFailureException;
@@ -8,13 +8,13 @@ import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 
 /**
- * Generate XSD from database.
+ * Generate XSD from the database.
  */
 @Mojo(name = "generate-xsd")
 public class GenerateXsdMojo extends AbstractMojo implements Keywords {
 
 	/**
-	 * Path to Light Air properties file. Defaults to {@code target/test-classes/light-air.properties}.
+	 * Path to the Light Air properties file. Defaults to {@code target/test-classes/light-air.properties}.
 	 */
 	@Parameter(defaultValue = "target/test-classes/light-air.properties")
 	private String lightAirProperties;
@@ -35,9 +35,9 @@ public class GenerateXsdMojo extends AbstractMojo implements Keywords {
 	public void execute() throws MojoFailureException {
 		getLog().info("Generating Light Air XSD files...");
 
-		Api.initialize(lightAirProperties);
-		Api.generateXsd();
-		Api.shutdown();
+		LightAirApi.initialize(lightAirProperties);
+		LightAirApi.generateXsd();
+		LightAirApi.shutdown();
 
 		getLog().info("Finished generating Light Air XSD files.");
 	}

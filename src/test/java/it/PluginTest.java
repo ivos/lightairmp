@@ -1,12 +1,10 @@
 package it;
 
 import net.sf.lightairmp.GenerateXsdMojo;
-import net.sf.seaf.test.util.TemplatingTestBase;
 import org.apache.commons.io.FileUtils;
 import org.apache.maven.plugin.Mojo;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.SingleConnectionDataSource;
 import org.xml.sax.SAXException;
@@ -19,6 +17,8 @@ import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
 import java.io.File;
 
+import static org.junit.jupiter.api.Assertions.fail;
+
 public class PluginTest extends TemplatingTestBase {
 
 	static boolean replaceTemplates = false;
@@ -28,10 +28,12 @@ public class PluginTest extends TemplatingTestBase {
 	static JdbcTemplate db, dbHsql;
 
 	static {
-		SingleConnectionDataSource dataSource = new SingleConnectionDataSource("jdbc:h2:mem:test", "sa", "", true);
+		SingleConnectionDataSource dataSource =
+			new SingleConnectionDataSource("jdbc:h2:mem:test", "sa", "", true);
 		db = new JdbcTemplate(dataSource);
 
-		SingleConnectionDataSource dataSourceHsql = new SingleConnectionDataSource("jdbc:hsqldb:mem:test", "sa", "", true);
+		SingleConnectionDataSource dataSourceHsql =
+			new SingleConnectionDataSource("jdbc:hsqldb:mem:test", "sa", "", true);
 		dbHsql = new JdbcTemplate(dataSourceHsql);
 	}
 
@@ -42,34 +44,35 @@ public class PluginTest extends TemplatingTestBase {
 	private void createDefaultSchema() {
 		db.execute("create table table2 (id int primary key, table1id int, a2 varchar(255), int2 int)");
 		db.execute("create table table1 (id int primary key, a1 varchar(255), int1 int, "
-				+ "double1 double, date1 date, time1 time, timestamp1 timestamp)");
+			+ "double1 double precision, date1 date, time1 time, timestamp1 timestamp)");
 	}
 
 	private void dropDefaultSchema() {
-		db.execute("drop table table2 if exists");
-		db.execute("drop table table1 if exists");
+		db.execute("drop table if exists table2");
+		db.execute("drop table if exists table1");
 	}
 
 	private void createOtherSchema() {
 		db.execute("create schema schema2");
-		db.execute("create table schema2.table33 (id int primary key, a6 varchar(255), double6 double)");
+		db.execute("create table schema2.table33 (id int primary key, a6 varchar(255), double6 double precision)");
 		db.execute("create table schema2.table32 (id int primary key, a5 varchar(255), date5 date)");
 		db.execute("create table schema2.table31 (id int primary key, a4 varchar(255), int4 int, time4 time)");
 	}
 
 	private void dropOtherSchema() {
-		db.execute("drop table schema2.table31 if exists");
-		db.execute("drop table schema2.table31 if exists");
-		db.execute("drop table schema2.table31 if exists");
-		db.execute("drop schema schema2 if exists");
+		db.execute("drop table if exists schema2.table31");
+		db.execute("drop table if exists schema2.table32");
+		db.execute("drop table if exists schema2.table33");
+		db.execute("drop schema if exists schema2");
 	}
 
 	private void createHsql() {
-		dbHsql.execute("create table tableHsql (id int primary key, tableHsqlid int, aHsql varchar(255), intHsql int)");
+		dbHsql.execute("create table tablehsql (id int primary key, tablehsqlid int, ahsql varchar(255),"
+			+ " inthsql int)");
 	}
 
 	private void dropHsql() {
-		dbHsql.execute("drop table tableHsql if exists");
+		dbHsql.execute("drop table tablehsql if exists");
 	}
 
 	private void validateXsdConformance(String path, String suffix) throws Exception {
@@ -80,7 +83,7 @@ public class PluginTest extends TemplatingTestBase {
 		try {
 			validator.validate(xmlFile);
 		} catch (SAXException e) {
-			Assert.fail("Sample XML file is not valid by generated XSD. " + e.getLocalizedMessage());
+			fail("Sample XML file is not valid by generated XSD. " + e.getLocalizedMessage());
 		}
 	}
 
@@ -90,7 +93,7 @@ public class PluginTest extends TemplatingTestBase {
 		return mojo;
 	}
 
-	@Before
+	@BeforeEach
 	public void setup() {
 		FileUtils.deleteQuietly(new File(GENERATED_BASE_DIR));
 	}
