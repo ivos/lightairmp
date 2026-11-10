@@ -20,7 +20,7 @@ How to use LightAir Maven plugin
         <!-- Run to generate XSDs: mvn light-air:generate-xsd -->
         <groupId>net.sf.lightairmp</groupId>
         <artifactId>light-air-maven-plugin</artifactId>
-        <version>${currentVersion}</version>
+        <version>${project.version}</version>
         <dependencies>
           <!-- Add dependency to the database that you use in LightAir tests -->
           <dependency>

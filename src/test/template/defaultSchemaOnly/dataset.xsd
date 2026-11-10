@@ -1,29 +1,29 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:la="http://lightair.sourceforge.net/">
-	<xsd:import namespace="http://lightair.sourceforge.net/" schemaLocation="light-air-types.xsd"/>
+	<xsd:import namespace="http://lightair.sourceforge.net/" schemaLocation="light-air-types.xsd" />
 
 	<xsd:element name="dataset">
 		<xsd:complexType>
 			<xsd:choice minOccurs="0" maxOccurs="unbounded">
-				<xsd:element name="table1" type="table1__Type"/>
-				<xsd:element name="table2" type="table2__Type"/>
+				<xsd:element name="table1" type="table1__Type" />
+				<xsd:element name="table2" type="table2__Type" />
 			</xsd:choice>
 		</xsd:complexType>
 	</xsd:element>
 
 	<xsd:complexType name="table1__Type">
-		<xsd:attribute name="id" use="optional" type="la:IntegerType"/>
-		<xsd:attribute name="a1" use="optional" type="la:StringNullableType"/>
-		<xsd:attribute name="int1" use="optional" type="la:IntegerNullableType"/>
-		<xsd:attribute name="double1" use="optional" type="la:BigdecimalNullableType"/>
-		<xsd:attribute name="date1" use="optional" type="la:DateNullableType"/>
-		<xsd:attribute name="time1" use="optional" type="la:TimeNullableType"/>
-		<xsd:attribute name="timestamp1" use="optional" type="la:TimestampNullableType"/>
+		<xsd:attribute name="id" use="optional" type="la:IntegerType" />
+		<xsd:attribute name="a1" use="optional" type="la:StringNullableType" />
+		<xsd:attribute name="int1" use="optional" type="la:IntegerNullableType" />
+		<xsd:attribute name="double1" use="optional" type="la:BigdecimalNullableType" />
+		<xsd:attribute name="date1" use="optional" type="la:DateNullableType" />
+		<xsd:attribute name="time1" use="optional" type="la:TimeNullableType" />
+		<xsd:attribute name="timestamp1" use="optional" type="la:TimestampNullableType" />
 	</xsd:complexType>
 	<xsd:complexType name="table2__Type">
-		<xsd:attribute name="id" use="optional" type="la:IntegerType"/>
-		<xsd:attribute name="table1id" use="optional" type="la:IntegerNullableType"/>
-		<xsd:attribute name="a2" use="optional" type="la:StringNullableType"/>
-		<xsd:attribute name="int2" use="optional" type="la:IntegerNullableType"/>
+		<xsd:attribute name="id" use="optional" type="la:IntegerType" />
+		<xsd:attribute name="table1id" use="optional" type="la:IntegerNullableType" />
+		<xsd:attribute name="a2" use="optional" type="la:StringNullableType" />
+		<xsd:attribute name="int2" use="optional" type="la:IntegerNullableType" />
 	</xsd:complexType>
 </xsd:schema>
