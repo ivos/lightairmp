@@ -3,7 +3,7 @@
 
 	<groupId>net.sf.lightairmp</groupId>
 	<artifactId>light-air-maven-plugin</artifactId>
-	<version>4.0.0</version>
+	<version>4.0.1-SNAPSHOT</version>
 	<packaging>maven-plugin</packaging>
 
 	<name>Light Air Maven Plugin</name>
@@ -36,7 +36,7 @@
 	</issueManagement>
 
 	<properties>
-		<project.build.outputTimestamp>2026-11-12T12:53:36Z</project.build.outputTimestamp>
+		<project.build.outputTimestamp>2026-11-12T12:53:46Z</project.build.outputTimestamp>
 
 		<maven.compiler.release>17</maven.compiler.release>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -47,7 +47,7 @@
 		<connection>scm:git:git@github.com:ivos/lightairmp.git</connection>
 		<developerConnection>scm:git:git@github.com:ivos/lightairmp.git</developerConnection>
 		<url>https://github.com/ivos/lightairmp</url>
-		<tag>light-air-maven-plugin-4.0.0</tag>
+		<tag>HEAD</tag>
 	</scm>
 	<distributionManagement>
 		<site>
